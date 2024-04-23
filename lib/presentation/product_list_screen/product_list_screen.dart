@@ -107,7 +107,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PaymentScreen(),
+                          builder: (context) => PaymentScreen(
+                            amount: totalPrice,
+                          ),
                         ),
                         (route) => false);
                   },

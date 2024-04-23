@@ -6,7 +6,8 @@ import 'package:med_scan/core/constants/color_consatnt.dart';
 import 'package:med_scan/presentation/payment_successfull_screen/payment_successfull_screen.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key});
+  const PaymentScreen({super.key, this.amount = 0});
+  final double amount;
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -53,11 +54,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 children: [
                   Icon(Icons.currency_rupee),
                   Text(
-                    "1500/- ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 50,
-                        color: ColorConstant.primaryBlack),
+                    "${widget.amount}/- ",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50, color: ColorConstant.primaryBlack),
                   ),
                 ],
               ),
@@ -77,10 +75,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                   Text(
                     '$counter',
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red),
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.red),
                   ),
                 ],
               ),
