@@ -4,11 +4,34 @@ import 'package:flutter/widgets.dart';
 import 'package:med_scan/core/constants/color_consatnt.dart';
 import 'package:med_scan/presentation/payment_screen/payment_screen.dart';
 import 'package:med_scan/presentation/product_list_screen/widgets/product_list_card.dart';
+import 'package:med_scan/presentation/scanner_screen/view/scanner_screen.dart';
+import 'package:med_scan/repository/scanner_screen/model/scanner_model.dart';
 
-class ProductListScreen extends StatelessWidget {
-  final String scannedData;
-
+class ProductListScreen extends StatefulWidget {
+  // final String scannedData;
+  final List<SearchResultResModel> scannedData;
   ProductListScreen({required this.scannedData});
+
+  @override
+  State<ProductListScreen> createState() => _ProductListScreenState();
+}
+
+class _ProductListScreenState extends State<ProductListScreen> {
+  double totalPrice = 0;
+
+  calculateTotal() {
+    totalPrice = 0;
+    for (var element in widget.scannedData) {
+      totalPrice = (totalPrice + ((element.quantity ?? 1) * (element.price ?? 0)));
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    calculateTotal();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +40,35 @@ class ProductListScreen extends StatelessWidget {
         preferredSize: Size.fromHeight(80.0),
         child: AppBar(
           title: Text('Product List'),
-          titleTextStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: ColorConstant.primarygreen,
-              fontSize: 25),
+          titleTextStyle: TextStyle(fontWeight: FontWeight.bold, color: ColorConstant.primarygreen, fontSize: 25),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ScannerScreen(),
+                    ),
+                  );
+                },
+                icon: Icon(Icons.qr_code_scanner_sharp))
+          ],
         ),
       ),
-      body: ListView.separated(
-        itemBuilder: (context, index) => ProductListCard(),
-        separatorBuilder: (context, index) => Divider(),
-        itemCount: 10,
-      ),
+      body: widget.scannedData.isEmpty
+          ? Center(
+              child: Text("No data Found"),
+            )
+          : ListView.separated(
+              itemBuilder: (context, index) => ProductListCard(
+                name: widget.scannedData[index].name.toString(),
+                price: widget.scannedData[index].price.toString(),
+                qty: widget.scannedData[index].quantity.toString(),
+                url: widget.scannedData[index].img.toString(),
+              ),
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: widget.scannedData.length,
+            ),
       bottomNavigationBar: Container(
         height: 55,
         color: ColorConstant.primarygreen,
@@ -43,18 +84,14 @@ class ProductListScreen extends StatelessWidget {
                     children: [
                       Text(
                         "Total Amount  :",
-                        style: TextStyle(
-                            fontSize: 15, color: ColorConstant.primaryWhite),
+                        style: TextStyle(fontSize: 15, color: ColorConstant.primaryWhite),
                       ),
                       SizedBox(
                         width: 10,
                       ),
                       Text(
-                        "1500 /- ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: ColorConstant.primaryWhite),
+                        "$totalPrice /- ",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: ColorConstant.primaryWhite),
                       ),
                     ],
                   ),
@@ -80,10 +117,7 @@ class ProductListScreen extends StatelessWidget {
                     child: Center(
                       child: Text(
                         "Buy Now",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.white),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
                       ),
                     ),
                   ),

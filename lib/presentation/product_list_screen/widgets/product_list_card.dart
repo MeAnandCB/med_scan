@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:med_scan/core/constants/color_consatnt.dart';
 
 class ProductListCard extends StatelessWidget {
-  const ProductListCard({super.key});
+  const ProductListCard({super.key, required this.price, required this.url, required this.name, required this.qty});
+  final String price;
+  final String url;
+  final String name;
+  final String qty;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +29,7 @@ class ProductListCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.amber,
                 ),
-                child: Image.network(
-                    "https://bsmedia.business-standard.com/_media/bs/img/article/2023-07/12/full/1689175810-294.jpg?im=FitAndFill=(826,465)",
-                    fit: BoxFit.fitWidth),
+                child: Image.network(url, fit: BoxFit.fitWidth),
               ),
             ),
             SizedBox(
@@ -41,11 +43,8 @@ class ProductListCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Name of the product",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: ColorConstant.primarygreen),
+                      name,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: ColorConstant.primarygreen),
                     ),
                     SizedBox(
                       height: 10,
@@ -57,22 +56,18 @@ class ProductListCard extends StatelessWidget {
                           children: [
                             Icon(Icons.currency_rupee),
                             Text(
-                              "100 ",
+                              price,
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: ColorConstant.primaryYellow),
+                                  fontWeight: FontWeight.bold, fontSize: 20, color: ColorConstant.primaryYellow),
                             ),
                           ],
                         ),
                         Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 5),
+                            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                    color: ColorConstant.primaryliteGreen)),
-                            child: Text("Qty : 10"))
+                                border: Border.all(color: ColorConstant.primaryliteGreen)),
+                            child: Text("Qty : $qty"))
                       ],
                     ),
                   ],
