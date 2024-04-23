@@ -1,64 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:med_scan/presentation/product_list_screen/product_list_screen.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class ScannerScreen extends StatefulWidget {
+class QRViewExample extends StatefulWidget {
   @override
-  _ScannerScreenState createState() => _ScannerScreenState();
+  State<StatefulWidget> createState() => _QRViewExampleState();
 }
 
-class _ScannerScreenState extends State<ScannerScreen> {
-  String _barcode = 'Unknown';
+class _QRViewExampleState extends State<QRViewExample> {
+  late QRViewController controller;
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   @override
-  void initState() {
-    super.initState();
-    _scanBarcode(); // Automatically trigger barcode scanning when the app starts
-  }
-
-  Future<void> _scanBarcode() async {
-    try {
-      String barcode = await FlutterBarcodeScanner.scanBarcode(
-        "#ff6666",
-        "Cancel",
-        true,
-        ScanMode.DEFAULT,
-      );
-
-      setState(() {
-        _barcode = barcode;
-      });
-
-      // Navigate to the next screen after scanning
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProductListScreen(scannedData: _barcode),
-        ),
-      );
-    } on PlatformException catch (e) {
-      print("Error scanning barcode: ${e.message}");
-      setState(() {
-        _barcode = 'Failed to scan barcode';
-      });
-    }
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '$_barcode',
+      appBar: AppBar(
+        title: Text('QR Code Scanner'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: QRView(
+              key: qrKey,
+              onQRViewCreated: _onQRViewCreated,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
+  }
+
+  void _onQRViewCreated(QRViewController controller) {
+    this.controller = controller;
+    controller.scannedDataStream.listen((scanData) {
+      // Do something with the scanned data, e.g., display it
+      print('Scanned data: ${scanData.code}');
+      // You can also use setState() to update UI based on scanned data
+    });
   }
 }
