@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:med_scan/core/constants/color_consatnt.dart';
 import 'package:med_scan/presentation/payment_screen/payment_screen.dart';
 import 'package:med_scan/presentation/product_list_screen/widgets/product_list_card.dart';
@@ -22,7 +21,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
   calculateTotal() {
     totalPrice = 0;
     for (var element in widget.scannedData) {
-      totalPrice = (totalPrice + ((element.quantity ?? 1) * (element.price ?? 0)));
+      totalPrice =
+          (totalPrice + ((element.quantity ?? 1) * (element.price ?? 0)));
     }
     setState(() {});
   }
@@ -36,11 +36,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: ColorConstant.primaryWhite,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: AppBar(
           title: Text('Product List'),
-          titleTextStyle: TextStyle(fontWeight: FontWeight.bold, color: ColorConstant.primarygreen, fontSize: 25),
+          titleTextStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: ColorConstant.primarygreen,
+              fontSize: 25),
           actions: [
             IconButton(
                 onPressed: () {
@@ -84,14 +88,18 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     children: [
                       Text(
                         "Total Amount  :",
-                        style: TextStyle(fontSize: 15, color: ColorConstant.primaryWhite),
+                        style: TextStyle(
+                            fontSize: 15, color: ColorConstant.primaryWhite),
                       ),
                       SizedBox(
                         width: 10,
                       ),
                       Text(
                         "$totalPrice /- ",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: ColorConstant.primaryWhite),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: ColorConstant.primaryWhite),
                       ),
                     ],
                   ),
@@ -104,14 +112,23 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 flex: 2,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PaymentScreen(
-                            amount: totalPrice,
+                    if (totalPrice > 0) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PaymentScreen(
+                              amount: totalPrice,
+                            ),
                           ),
+                          (route) => false);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('No data found! Please scan again'),
                         ),
-                        (route) => false);
+                      );
+                    }
                   },
                   child: Container(
                     height: double.infinity,
@@ -119,7 +136,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     child: Center(
                       child: Text(
                         "Buy Now",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white),
                       ),
                     ),
                   ),

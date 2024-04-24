@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:med_scan/core/constants/color_consatnt.dart';
 import 'package:med_scan/presentation/scanner_screen/view/scanner_screen.dart';
 
 class PaymentSuccessfull extends StatefulWidget {
@@ -27,6 +28,7 @@ class _PaymentSuccessfullState extends State<PaymentSuccessfull> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConstant.primaryWhite,
       body: Center(
         child: Lottie.asset("assets/payment_successful.json"),
       ),

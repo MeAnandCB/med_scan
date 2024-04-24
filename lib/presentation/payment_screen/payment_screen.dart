@@ -42,6 +42,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: ColorConstant.primaryWhite,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),

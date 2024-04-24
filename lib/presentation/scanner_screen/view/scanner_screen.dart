@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:med_scan/core/constants/color_consatnt.dart';
 import 'package:med_scan/presentation/product_list_screen/product_list_screen.dart';
 import 'package:med_scan/repository/scanner_screen/model/scanner_model.dart';
 
@@ -63,10 +64,11 @@ class _ScannerScreenState extends State<ScannerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: ColorConstant.primaryWhite,
         body: Container(
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
-    ));
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ));
   }
 }
