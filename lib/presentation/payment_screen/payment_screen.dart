@@ -42,7 +42,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: ColorConstant.primaryWhite,
+      backgroundColor: ColorConstant.primaryWhite,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -56,14 +56,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Icon(Icons.currency_rupee),
                   Text(
                     "${widget.amount}/- ",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50, color: ColorConstant.primaryBlack),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 50,
+                        color: ColorConstant.primaryBlack),
                   ),
                 ],
               ),
               SizedBox(
                 height: 20,
               ),
-              Image.asset("assets/qr-code.png"),
+              Image.asset("assets/Qr.jpg"),
               Text("Scan the QR and Pay"),
               SizedBox(
                 height: 45,
@@ -76,7 +79,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                   Text(
                     '$counter',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.red),
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red),
                   ),
                 ],
               ),

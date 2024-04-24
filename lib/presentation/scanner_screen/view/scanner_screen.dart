@@ -16,7 +16,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
   @override
   void initState() {
     super.initState();
-    _scanBarcode(); // Automatically trigger barcode scanning when the app starts
+    // Automatically trigger barcode scanning when the app starts
+    _scanBarcode(); 
   }
 
   Future<void> _scanBarcode() async {
