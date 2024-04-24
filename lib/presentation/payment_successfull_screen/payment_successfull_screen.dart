@@ -16,7 +16,7 @@ class _PaymentSuccessfullState extends State<PaymentSuccessfull> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => QRViewExample(),
+          builder: (context) => ScannerScreen(),
         ),
         (route) => false,
       );

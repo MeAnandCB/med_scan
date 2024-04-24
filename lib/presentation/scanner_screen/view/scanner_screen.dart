@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:med_scan/presentation/product_list_screen/product_list_screen.dart';
 import 'package:med_scan/repository/scanner_screen/model/scanner_model.dart';
 
-class QRViewExample extends StatefulWidget {
+class ScannerScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _QRViewExampleState();
+  _ScannerScreenState createState() => _ScannerScreenState();
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
@@ -56,9 +58,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
         _barcode = 'Failed to scan barcode';
       });
     }
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -69,14 +68,5 @@ class _ScannerScreenState extends State<ScannerScreen> {
         child: CircularProgressIndicator(),
       ),
     ));
-  }
-
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      // Do something with the scanned data, e.g., display it
-      print('Scanned data: ${scanData.code}');
-      // You can also use setState() to update UI based on scanned data
-    });
   }
 }
